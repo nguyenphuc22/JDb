@@ -1,0 +1,14 @@
+import DATABASE.Adapter;
+import DATABASE.AdapterJDB;
+import Model.Animal;
+import Model.User;
+
+public class MainTuyen {
+    public static void main(String[] args) {
+        User user = new User("Nick","123");
+        Animal dog = new Animal("Tuyen","21","Nothing");
+        Adapter adapter = new AdapterJDB();
+        System.out.println(adapter.convertQuery(user));
+        System.out.println(adapter.convertQuery(dog));
+    }
+}

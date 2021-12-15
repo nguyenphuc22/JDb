@@ -1,5 +1,7 @@
 package DATABASE;
 
+import Entity.Table;
+
 public class AdapterJDB implements Adapter {
 
     @Override
@@ -8,7 +10,7 @@ public class AdapterJDB implements Adapter {
     }
 
     @Override
-    public <T> String convertTable(Class<T> KLass) {
+    public <T> String convertTable(Class<T> Klass) {
         return null;
     }
 }
