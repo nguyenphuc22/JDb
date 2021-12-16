@@ -6,7 +6,7 @@ public class JDB implements Database {
     private DatabaseInfo mDatabaseInfo;
     private static JDB instance;
     private Adapter adapter;
-
+    private JDBCLib mJDBCLib;
     public static JDB getInstance() {
         if (instance == null)
             instance = new JDB();
@@ -36,6 +36,11 @@ public class JDB implements Database {
         this.mDatabaseInfo = databaseInfo;
     }
 
+    public void setJdbcLib(JDBCLib jdbcLib) {
+        mJDBCLib = jdbcLib;
+    }
+
+    @Override
     public void insert(Object ... objects) {
         String query = "";
         for (int i = 0; i < objects.length ; i++) {
@@ -43,7 +48,7 @@ public class JDB implements Database {
         }
         executing(query);
     }
-
+    @Override
     public void delete(Object ... objects) {
         String query = "";
         for (int i = 0; i < objects.length ; i++) {
@@ -51,7 +56,7 @@ public class JDB implements Database {
         }
         executing(query);
     }
-
+    @Override
     public void update(Object ... objects) {
         String query = "";
         for (int i = 0; i < objects.length ; i++) {
