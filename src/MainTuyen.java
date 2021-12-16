@@ -5,10 +5,8 @@ import Model.User;
 
 public class MainTuyen {
     public static void main(String[] args) {
-        User user = new User("Nick","123");
-        Animal dog = new Animal("Tuyen","21","Nothing");
         Adapter adapter = new AdapterJDB();
-        System.out.println(adapter.convertQuery(user));
-        System.out.println(adapter.convertQuery(dog));
+        System.out.println(adapter.convertTable(User.class));
+        System.out.println(adapter.convertTable(Animal.class));
     }
 }
