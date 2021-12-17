@@ -14,8 +14,8 @@ public class JDB implements Database {
     }
 
     @Override
-    public boolean open() {
-        return false;
+    public void open() {
+        mJDBCLib.connection(mDatabaseInfo.getUrl(),mDatabaseInfo.getProperties());
     }
 
     @Override

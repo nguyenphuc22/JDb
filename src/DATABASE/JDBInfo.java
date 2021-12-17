@@ -4,7 +4,7 @@ import java.util.Properties;
 
 public class JDBInfo implements DatabaseInfo{
     private final String url;
-    private final Properties properties;
+    private Properties properties = null;
 
     public JDBInfo(String url, Properties properties) {
         this.url = url;

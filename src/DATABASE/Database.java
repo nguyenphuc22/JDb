@@ -3,7 +3,7 @@ package DATABASE;
 
 public interface Database {
 
-    boolean open();
+    void open();
     void executing(String query);
     <T> void createTable(Class<T> ... klass);
     void insert(Object ... objects);
