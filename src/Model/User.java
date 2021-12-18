@@ -14,7 +14,6 @@ public class User {
     @PrimaryKey
     public String name;
 
-    public int a;
     @ColumnInfo
     public String age;
 }
