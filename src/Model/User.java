@@ -4,16 +4,23 @@ import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
 
-@Table
-public class User {
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+@Table(name="User")
+public class User  {
 
     public User(String name, String age) {
         this.name = name;
         this.age = age;
+
     }
-    @PrimaryKey
+    @PrimaryKey(name="Tuyennnnnn")
     public String name;
 
-    @ColumnInfo
+    @ColumnInfo(name="age")
     public String age;
+
+
 }

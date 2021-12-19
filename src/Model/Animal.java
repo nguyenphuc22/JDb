@@ -1,15 +1,16 @@
 package Model;
 
 import Entity.ColumnInfo;
+import Entity.PrimaryKey;
 import Entity.Table;
 
-@Table
-public class Animal {
-    @ColumnInfo
+@Table(name = "asd")
+public class Animal{
+    @PrimaryKey(name ="name")
     String name;
-    @ColumnInfo
+    @ColumnInfo(name = "age",notnull = true)
     String age;
-    @ColumnInfo
+    @ColumnInfo(name ="type")
     String type;
 
     public Animal(String name, String age, String type) {
