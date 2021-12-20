@@ -1,5 +1,9 @@
 package DATABASE;
 
+import DATABASE.Service.JOracle;
+import DATABASE.Service.JSQLite;
+import DATABASE.Service.JService;
+
 public abstract class JFactory {
 
     public final static String JService_SQLITE = "SQLITE";

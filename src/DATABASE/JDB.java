@@ -1,10 +1,13 @@
 package DATABASE;
 
+import DATABASE.Service.JSQLite;
+import DATABASE.Service.JService;
+
 public class JDB implements Database {
     private DatabaseInfo mDatabaseInfo;
     private static JDB instance;
     private Adapter adapter;
-    private JService mJDBCLib;
+    private JService jService;
     private JFactory jFactory;
 
     public static JDB getInstance() {
@@ -14,20 +17,20 @@ public class JDB implements Database {
     }
 
     public JDB() {
-        this.mJDBCLib = new JSQLite();
+        this.jService = new JSQLite();
         this.adapter = new AdapterJDB();
         this.jFactory = new JFactoryDefault();
     }
 
     @Override
     public void open() {
-        if (!mJDBCLib.isOpen())
-            mJDBCLib.connection(mDatabaseInfo.getUrl(),mDatabaseInfo.getProperties());
+        if (!jService.isOpen())
+            jService.connection(mDatabaseInfo.getUrl(),mDatabaseInfo.getProperties());
     }
 
     @Override
     public void executing(String query) {
-        mJDBCLib.executing(query);
+        jService.executing(query);
     }
     @Override
     public void createTable(Class<?>... klass) {
@@ -43,8 +46,8 @@ public class JDB implements Database {
         this.mDatabaseInfo = databaseInfo;
     }
 
-    public void setJdbcLib(String JService) {
-        mJDBCLib = jFactory.getJService(JService);
+    public void setJService(String JService) {
+        jService = jFactory.getJService(JService);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class JDB implements Database {
 
     @Override
     public void close() {
-        if (!mJDBCLib.isClose())
-            mJDBCLib.close();
+        if (!jService.isClose())
+            jService.close();
     }
 }

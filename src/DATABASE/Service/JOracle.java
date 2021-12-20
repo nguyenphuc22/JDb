@@ -1,4 +1,6 @@
-package DATABASE;
+package DATABASE.Service;
+
+import DATABASE.Service.JService;
 
 import java.util.Properties;
 
