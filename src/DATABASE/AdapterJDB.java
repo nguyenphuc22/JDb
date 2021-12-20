@@ -61,7 +61,7 @@ public class AdapterJDB implements Adapter {
     }
 
     @Override
-    public <T> String convertTable(Class<T> Klass) {
+    public String convertTable(Class<?> Klass) {
 //        CREATE TABLE Persons (
 //                PersonID int,
 //                LastName varchar(255),

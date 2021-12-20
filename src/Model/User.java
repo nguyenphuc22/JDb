@@ -16,7 +16,9 @@ public class User  {
         this.age = age;
 
     }
-    @PrimaryKey(name="Tuyennnnnn")
+    @PrimaryKey(name="Id")
+    public int id;
+    @ColumnInfo(name= "name")
     public String name;
 
     @ColumnInfo(name="age")

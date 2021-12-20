@@ -8,7 +8,7 @@ import java.util.Properties;
 public class JSQLite implements JDBCLib{
     Connection conn = null;
     @Override
-    public void connection(String url, Properties properties)  {
+    public Connection connection(String url, Properties properties) {
         String state = "jdbc:sqlite:";
         String resultURl = state.concat(url);
         System.out.println(resultURl);
@@ -17,19 +17,12 @@ public class JSQLite implements JDBCLib{
                 conn = DriverManager.getConnection(resultURl);
             else
                 conn = DriverManager.getConnection(resultURl,properties);
-
             System.out.println("Connection to SQLite has been established.");
+            return conn;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
+        return conn;
     }
 
     @Override

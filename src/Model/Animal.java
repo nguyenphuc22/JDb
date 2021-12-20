@@ -4,11 +4,13 @@ import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
 
-@Table(name = "asd")
+@Table(name = "Animal")
 public class Animal{
-    @PrimaryKey(name ="name")
+    @PrimaryKey(name ="id")
+    int id;
+    @ColumnInfo(name = "name")
     String name;
-    @ColumnInfo(name = "age",notnull = true)
+    @ColumnInfo(name = "age")
     String age;
     @ColumnInfo(name ="type")
     String type;

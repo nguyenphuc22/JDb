@@ -1,6 +1,6 @@
-import DATABASE.JDB;
-import DATABASE.JDBInfo;
-import DATABASE.JSQLite;
+import DATABASE.*;
+import Model.Animal;
+import Model.User;
 
 import java.util.Properties;
 
@@ -11,7 +11,9 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        jdb.setJdbcLib(new JSQLite());
+        jdb.setJdbcLib(JFactory.JDBCLIB_SQLITE);
         jdb.open();
+        jdb.createTable(User.class,Animal.class);
+        jdb.close();
     }
 }
