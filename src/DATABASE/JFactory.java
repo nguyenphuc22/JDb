@@ -4,9 +4,9 @@ public abstract class JFactory {
 
     public final static String JDBCLIB_SQLITE = "SQLITE";
     public final static String JDBCLIB_ORACLE = "ORACLE";
-    private JDBCLib jdbcLib;
+    private JService jdbcLib;
 
-    public JDBCLib getJDBC(String JDBCLIB) {
+    public JService getJDBC(String JDBCLIB) {
         switch (JDBCLIB) {
             case JDBCLIB_SQLITE -> {
                 jdbcLib = new JSQLite();

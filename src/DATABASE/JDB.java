@@ -1,14 +1,10 @@
 package DATABASE;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 public class JDB implements Database {
     private DatabaseInfo mDatabaseInfo;
     private static JDB instance;
     private Adapter adapter;
-    private JDBCLib mJDBCLib;
-    private Connection connection;
+    private JService mJDBCLib;
     private JFactory jFactory;
 
     public static JDB getInstance() {
@@ -25,19 +21,17 @@ public class JDB implements Database {
 
     @Override
     public void open() {
-        connection = mJDBCLib.connection(mDatabaseInfo.getUrl(),mDatabaseInfo.getProperties());
+        if (!mJDBCLib.isOpen())
+            mJDBCLib.connection(mDatabaseInfo.getUrl(),mDatabaseInfo.getProperties());
     }
 
     @Override
     public void executing(String query) {
-        try {
-            connection.createStatement().execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        mJDBCLib.executing(query);
     }
     @Override
     public void createTable(Class<?>... klass) {
+        open();
         String query;
         for (Class<?> aClass : klass) {
             query = adapter.convertTable(aClass);
@@ -55,6 +49,7 @@ public class JDB implements Database {
 
     @Override
     public void insert(Object ... objects) {
+        open();
         String query;
         for (Object object : objects) {
             query = adapter.convertQuery(object);
@@ -64,6 +59,7 @@ public class JDB implements Database {
     }
     @Override
     public void delete(Object ... objects) {
+        open();
         String query = "";
         for (int i = 0; i < objects.length ; i++) {
             query = adapter.convertQuery(objects[i]);
@@ -72,6 +68,7 @@ public class JDB implements Database {
     }
     @Override
     public void update(Object ... objects) {
+        open();
         String query = "";
         for (int i = 0; i < objects.length ; i++) {
             query = adapter.convertQuery(objects[i]);
@@ -89,10 +86,7 @@ public class JDB implements Database {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        if (!mJDBCLib.isClose())
+            mJDBCLib.close();
     }
 }

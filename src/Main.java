@@ -11,8 +11,6 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        jdb.setJdbcLib(JFactory.JDBCLIB_SQLITE);
-        jdb.open();
         jdb.createTable(User.class,Animal.class);
         jdb.close();
     }
