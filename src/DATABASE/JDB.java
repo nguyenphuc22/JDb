@@ -43,8 +43,8 @@ public class JDB implements Database {
         this.mDatabaseInfo = databaseInfo;
     }
 
-    public void setJdbcLib(String JDBCLIB) {
-        mJDBCLib = jFactory.getJDBC(JDBCLIB);
+    public void setJdbcLib(String JService) {
+        mJDBCLib = jFactory.getJService(JService);
     }
 
     @Override
