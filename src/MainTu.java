@@ -1,5 +1,6 @@
 import DATABASE.Adapter;
 import DATABASE.AdapterJDB;
+import Entity.ColumnInfo;
 import Model.Animal;
 import Model.User;
 

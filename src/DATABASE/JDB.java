@@ -2,6 +2,10 @@ package DATABASE;
 
 import DATABASE.Service.JSQLite;
 import DATABASE.Service.JService;
+import Entity.Table;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class JDB implements Database {
     private DatabaseInfo mDatabaseInfo;
@@ -17,9 +21,9 @@ public class JDB implements Database {
     }
 
     public JDB() {
-        this.jService = new JSQLite();
-        this.adapter = new AdapterJDB();
         this.jFactory = new JFactoryDefault();
+        jService = jFactory.getJService(JFactory.JService_SQLITE);
+        setAdapter(new AdapterJDB());
     }
 
     @Override
@@ -55,7 +59,7 @@ public class JDB implements Database {
         open();
         String query;
         for (Object object : objects) {
-            query = adapter.convertQuery(object);
+            query = adapter.convertInsert(object);
             System.out.println(query);
             executing(query);
         }
@@ -63,20 +67,20 @@ public class JDB implements Database {
     @Override
     public void delete(Object ... objects) {
         open();
-        String query = "";
-        for (int i = 0; i < objects.length ; i++) {
-            query = adapter.convertQuery(objects[i]);
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertDelete(object);
+            executing(query);
         }
-        executing(query);
     }
     @Override
     public void update(Object ... objects) {
         open();
-        String query = "";
-        for (int i = 0; i < objects.length ; i++) {
-            query = adapter.convertQuery(objects[i]);
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertUpdate(object);
+            executing(query);
         }
-        executing(query);
     }
 
     public void setJFactory(JFactory jFactory) {
@@ -92,4 +96,14 @@ public class JDB implements Database {
         if (!jService.isClose())
             jService.close();
     }
+
+    @Override
+    public <T> List<T> get(Class<T> kClass) {
+        String query = adapter.convertSelect(kClass);
+        // Create object using class
+        // https://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor
+        return null;
+    }
+
+
 }

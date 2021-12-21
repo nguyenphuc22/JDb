@@ -2,6 +2,7 @@ package DATABASE.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -33,6 +34,17 @@ public class JSQLite implements JService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ResultSet executingResult(String query) {
+        ResultSet resultSet = null;
+        try {
+            resultSet = conn.createStatement().executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 
     @Override

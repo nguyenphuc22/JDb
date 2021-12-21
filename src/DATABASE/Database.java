@@ -1,6 +1,10 @@
 package DATABASE;
 
 
+import Entity.Table;
+
+import java.util.List;
+
 public interface Database {
 
     void open();
@@ -10,5 +14,6 @@ public interface Database {
     void delete(Object ... objects);
     void update(Object ... objects);
     void close();
+    <T> List<T> get(Class<T> kClass);
 
 }

@@ -62,7 +62,6 @@ public class AdapterJDB implements Adapter {
                 }
 
                 if (f.isAnnotationPresent(ColumnInfo.class)) {
-
                     List<String>column1 = new ArrayList<>();
 
                     try {
@@ -102,6 +101,21 @@ public class AdapterJDB implements Adapter {
         String update = "";
         // Delete
        // String delete = "";
+        return null;
+    }
+
+    @Override
+    public String convertInsert(Object object) {
+        return null;
+    }
+
+    @Override
+    public String convertDelete(Object object) {
+        return null;
+    }
+
+    @Override
+    public String convertUpdate(Object object) {
         return null;
     }
 
@@ -189,5 +203,10 @@ public class AdapterJDB implements Adapter {
         query=String.copyValueOf(query.toCharArray(), 0, query.length()-1);
         query=query+" );";
         return query;
+    }
+
+    @Override
+    public String convertSelect(Class<?> Klass) {
+        return null;
     }
 }

@@ -2,6 +2,7 @@ import DATABASE.*;
 import Model.Animal;
 import Model.User;
 
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
