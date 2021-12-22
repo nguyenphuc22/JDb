@@ -5,6 +5,7 @@ import DATABASE.Service.JService;
 import Entity.Table;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.ResultSet;
 import java.util.List;
 
 public class JDB implements Database {
@@ -99,12 +100,17 @@ public class JDB implements Database {
 
     @Override
     public <T> List<T> get(Class<T> kClass) {
-        // Tuyen
         String query = adapter.convertSelect(kClass);
+        ResultSet resultSet = this.jService.executingResult(query);
+        return createListObject(kClass,resultSet);
+    }
+
+    private <T> List<T> createListObject(Class<T> kClass,ResultSet resultSet) {
+        // Tuyen
         // Create object using class
+
         // https://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor
         return null;
     }
-
 
 }
