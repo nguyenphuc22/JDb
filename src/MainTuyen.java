@@ -1,5 +1,7 @@
 import DATABASE.Adapter;
 import DATABASE.AdapterJDB;
+import DATABASE.JDB;
+import DATABASE.JDBInfo;
 import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
@@ -47,6 +49,14 @@ public class MainTuyen {
         Annotation[] annotations = u.getAnnotations();
         // Lấy đối tượng Field
 
+        JDB jdb = JDB.getInstance();
+        JDBInfo jdbInfo = new JDBInfo.Builder()
+                .addUrl("DBTest.db")
+                .build();
+        jdb.setDatabaseInfo(jdbInfo);
+        jdb.createTable(User.class,Animal.class);
+        jdb.close();
+        List<User> users = jdb.get(User.class);
 
         Annotation[] fieldAnns = u.getAnnotations();
 

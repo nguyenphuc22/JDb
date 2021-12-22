@@ -14,5 +14,6 @@ public class Main {
         jdb.setDatabaseInfo(jdbInfo);
         jdb.createTable(User.class,Animal.class);
         jdb.close();
+        List<User> users = jdb.get(User.class);
     }
 }

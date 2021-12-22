@@ -99,6 +99,7 @@ public class JDB implements Database {
 
     @Override
     public <T> List<T> get(Class<T> kClass) {
+        // Tuyen
         String query = adapter.convertSelect(kClass);
         // Create object using class
         // https://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor

@@ -106,16 +106,19 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertInsert(Object object) {
+        // Tu
         return null;
     }
 
     @Override
     public String convertDelete(Object object) {
+        // Tu
         return null;
     }
 
     @Override
     public String convertUpdate(Object object) {
+        // Tu
         return null;
     }
 
@@ -207,6 +210,8 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertSelect(Class<?> Klass) {
+        // Tuyen
+        // SELECT * FROM table;
         return null;
     }
 }
