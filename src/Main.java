@@ -21,8 +21,7 @@ public class Main {
 //        List<User> users = jdb.get(User.class);
 //        Assert a = new Or(new Equal("City","Berlin"),new Equal("City","Obama"));
 //        System.out.println(new And(new Equal("Country","Germany"),a).getQuery());
-//        String url = "I'm nick seven where are you form";
-//        System.out.println(url.indexOf("where"));
-//        System.out.println(url.substring(0,url.lastIndexOf("where")));
+        String url = "I'm nick seven where are you form";
+        System.out.println(url.substring(0,url.lastIndexOf("where") + 5));
     }
 }

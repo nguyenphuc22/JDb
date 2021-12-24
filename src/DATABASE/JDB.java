@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public class JDB implements Database {
+    private String CHAR_WHERE = "where";
+
     private DatabaseInfo mDatabaseInfo;
     private static JDB instance;
     private Adapter adapter;
@@ -78,7 +80,14 @@ public class JDB implements Database {
 
     @Override
     public void delete(Assert a, Object... objects) {
-
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertDelete(object);
+            query = query.substring(0,query.toLowerCase().lastIndexOf(CHAR_WHERE) + 6);
+            query = query.concat(a.getQuery());
+            executing(query);
+        }
     }
 
     @Override
@@ -114,7 +123,10 @@ public class JDB implements Database {
 
     @Override
     public <T> List<T> get(Assert a, Class<T> kClass) {
-        return null;
+        String query = adapter.convertSelect(kClass);
+        query = query.concat(" ").concat(CHAR_WHERE).concat("").concat(a.getQuery());
+        ResultSet resultSet = this.jService.executingResult(query);
+        return createListObject(kClass,resultSet);
     }
 
     private <T> List<T> createListObject(Class<T> kClass,ResultSet resultSet) {
