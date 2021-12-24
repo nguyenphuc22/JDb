@@ -1,5 +1,6 @@
 package DATABASE;
 
+import DATABASE.Matcher.Assert;
 import DATABASE.Service.JSQLite;
 import DATABASE.Service.JService;
 import Entity.Table;
@@ -74,6 +75,12 @@ public class JDB implements Database {
             executing(query);
         }
     }
+
+    @Override
+    public void delete(Assert a, Object... objects) {
+
+    }
+
     @Override
     public void update(Object ... objects) {
         open();
@@ -103,6 +110,11 @@ public class JDB implements Database {
         String query = adapter.convertSelect(kClass);
         ResultSet resultSet = this.jService.executingResult(query);
         return createListObject(kClass,resultSet);
+    }
+
+    @Override
+    public <T> List<T> get(Assert a, Class<T> kClass) {
+        return null;
     }
 
     private <T> List<T> createListObject(Class<T> kClass,ResultSet resultSet) {

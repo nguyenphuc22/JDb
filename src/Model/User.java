@@ -18,6 +18,7 @@ public class User  {
     }
     @PrimaryKey(name="Id")
     public int id;
+
     @ColumnInfo(name= "name")
     public String name;
 
