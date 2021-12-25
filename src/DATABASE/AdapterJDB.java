@@ -106,20 +106,145 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertInsert(Object object) {
-        // Tu
-        return null;
+        String table;
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        Field[] fields = object.getClass().getDeclaredFields();
+        table = object.getClass().getAnnotation(Table.class).name();
+        List<List<String>> columns = new ArrayList<>();
+        for (Field f : fields) {
+            if (f.isAnnotationPresent(PrimaryKey.class)) {
+
+                try {
+
+                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            if (f.isAnnotationPresent(ColumnInfo.class)) {
+
+
+                try {
+                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        String insert ="INSERT INTO %s (%s) VALUES (%s)";
+        String col="";
+        String value="";
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+
+            // System.out.println("INSERT INTO  "+table+"(" +);
+
+            System.out.println( String.format(insert,table,entry.getKey(),hashMap.get(entry.getKey())));
+            col+=entry.getKey()+",";
+            value+="'"+hashMap.get(entry.getKey())+"' ,";
+
+            System.out.println( String.format(insert,table,entry.getKey(),hashMap.get(entry.getKey())));
+        }
+
+        return String.format(insert,table,col.substring(0, col.length() - 1),value.substring(0, value.length() - 1));
     }
 
     @Override
     public String convertDelete(Object object) {
-        // Tu
-        return null;
+        String table;
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        Field[] fields = object.getClass().getDeclaredFields();
+        table = object.getClass().getAnnotation(Table.class).name();
+        List<List<String>> columns = new ArrayList<>();
+        for (Field f : fields) {
+            if (f.isAnnotationPresent(PrimaryKey.class)) {
+
+                try {
+
+                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            if (f.isAnnotationPresent(ColumnInfo.class)) {
+
+
+                try {
+                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        String delete ="DELETE FROM %s WHERE %s";
+        String col="";
+        String value="";
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+
+            // System.out.println("INSERT INTO  "+table+"(" +);
+
+            System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
+           value+=entry.getKey()+ " = '" +hashMap.get(entry.getKey())+ "' AND " ;
+
+            // System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
+        }
+
+        return String.format(delete,table,value.substring(0, value.length() - 5));
     }
 
     @Override
     public String convertUpdate(Object object) {
-        // Tu
-        return null;
+        String table;
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        Field[] fields = object.getClass().getDeclaredFields();
+        table = object.getClass().getAnnotation(Table.class).name();
+        List<List<String>> columns = new ArrayList<>();
+        for (Field f : fields) {
+            if (f.isAnnotationPresent(PrimaryKey.class)) {
+
+                try {
+
+                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            if (f.isAnnotationPresent(ColumnInfo.class)) {
+
+
+                try {
+                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        String update ="UPDATE %s SET %s WHERE %s";
+        String col="";
+        String value="";
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+
+            // System.out.println("INSERT INTO  "+table+"(" +);
+
+            System.out.println( String.format(update,table,entry.getKey(),hashMap.get(entry.getKey())));
+            value+=entry.getKey()+ " = '" +hashMap.get(entry.getKey())+ "' AND " ;
+
+            // System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
+        }
+
+        return String.format(update,table,"",value.substring(0, value.length() - 5));
+
     }
 
     @Override
