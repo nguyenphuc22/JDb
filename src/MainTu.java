@@ -9,7 +9,7 @@ public class MainTu {
         User user = new User("Nick","123");
         Animal dog = new Animal("Tuyen","21","Nothing");
         Adapter adapter = new AdapterJDB();
-        System.out.println(adapter.convertQuery(user));
-        System.out.println(adapter.convertQuery(dog));
+        System.out.println(adapter.convertUpdate(user));
+       // System.out.println(adapter.convertQuery(dog));
     }
 }
