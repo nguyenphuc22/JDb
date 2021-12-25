@@ -120,6 +120,7 @@ public class JDB implements Database {
 
     @Override
     public <T> List<T> get(Class<T> kClass) {
+        open();
         String query = adapter.convertSelect(kClass);
         ResultSet resultSet = this.jService.executingResult(query);
         return createListObject(kClass,resultSet);
@@ -127,6 +128,7 @@ public class JDB implements Database {
 
     @Override
     public <T> List<T> get(Assert a, Class<T> kClass) {
+        open();
         String query = adapter.convertSelect(kClass);
         query = query.concat(" ").concat(CHAR_WHERE).concat("").concat(a.getQuery());
         ResultSet resultSet = this.jService.executingResult(query);
