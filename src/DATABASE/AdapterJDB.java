@@ -107,6 +107,9 @@ public class AdapterJDB implements Adapter {
         HashMap<String, String> column = new HashMap<>();
         HashMap<String, String> primarykey = new HashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+        }
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
         for (Field f : fields) {
@@ -153,6 +156,9 @@ public class AdapterJDB implements Adapter {
         HashMap<String, String> primarykey = new HashMap<>();
         String primary = "";
         Field[] fields = object.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+        }
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
         for (Field f : fields) {
@@ -179,6 +185,9 @@ public class AdapterJDB implements Adapter {
         HashMap<String, String> column = new HashMap<>();
         HashMap<String, String> primarykey = new HashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+        }
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
         for (Field f : fields) {
