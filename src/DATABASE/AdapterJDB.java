@@ -228,8 +228,11 @@ public class AdapterJDB implements Adapter {
         List<Field> primaries = getPrimaryKey(User.class);*/
 
         Field[] fieldsCol = Klass.getDeclaredFields();
+
+
         List<Field> columnInfos = new ArrayList<>();
         for (Field f : fieldsCol) {
+            f.setAccessible(true);
             if (f.isAnnotationPresent(ColumnInfo.class)) {
                 columnInfos.add(f);
             }
@@ -305,6 +308,10 @@ public class AdapterJDB implements Adapter {
     public String convertSelect(Class<?> Klass) {
         // Tuyen
         // SELECT * FROM table;
+        Field[] fields = Klass.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+        }
         Annotation ann = Klass.getAnnotation(Table.class);
         Table myAnn = (Table) ann;
         String query ="SELECT * FROM ";
