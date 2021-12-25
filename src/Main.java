@@ -1,4 +1,6 @@
 import DATABASE.*;
+import DATABASE.Convert.FactoryJDB;
+import DATABASE.Convert.FactoryTypeDB;
 import DATABASE.Matcher.And;
 import DATABASE.Matcher.Assert;
 import DATABASE.Matcher.Equal;
@@ -16,12 +18,6 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        Assert abc = new Equal("name","abc");
-        Assert xyz = new Equal("age","xyz");
-        Assert or = new And(abc,xyz);
-        for (User user : jdb.get(or,User.class)) {
-            System.out.println(user.getAge());
-        }
         jdb.close();
     }
 }

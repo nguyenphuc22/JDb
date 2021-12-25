@@ -1,5 +1,8 @@
 package DATABASE;
 
+import DATABASE.Convert.ConvertTypeDB;
+import DATABASE.Convert.FactoryJDB;
+import DATABASE.Convert.FactoryTypeDB;
 import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
@@ -14,10 +17,24 @@ import java.util.List;
 import java.util.Map;
 
 public class AdapterJDB implements Adapter {
-    // annotation
-    // reflection java
-    // https://www.javatpoint.com/java-annotation
-    // https://kipalog.com/posts/Lam-sao-de-xay-dung-thu-vien-ORM?fbclid=IwAR3nX26rvt4Ogm86hD8nATlM2_6DAJsi6BsD5Oncl4WvjlRTq7U74-shMPw
+
+    ConvertTypeDB convertTypeDB;
+    FactoryTypeDB factoryTypeDB;
+
+    public AdapterJDB() {
+        factoryTypeDB = new FactoryJDB();
+        convertTypeDB = factoryTypeDB.createDB(FactoryJDB.TYPEDB_SQLITE);
+    }
+
+
+    public void setConvertTypeDB(String TYPEDB) {
+        this.convertTypeDB = factoryTypeDB.createDB(TYPEDB);
+    }
+
+    public void setFactoryTypeDB(FactoryTypeDB factoryTypeDB) {
+        this.factoryTypeDB = factoryTypeDB;
+    }
+
     public  List<Field> getColumnInfos(Class<?> type) {
         Field[] fields = type.getDeclaredFields();
         List<Field> columns = new ArrayList<>();

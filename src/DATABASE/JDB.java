@@ -35,7 +35,7 @@ public class JDB implements Database {
     public JDB() {
         this.jFactory = new JFactoryDefault();
         jService = jFactory.getJService(JFactory.JService_SQLITE);
-        setAdapter(new AdapterJDB());
+        adapter = new AdapterJDB();
     }
 
     @Override
