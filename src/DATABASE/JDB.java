@@ -126,7 +126,6 @@ public class JDB implements Database {
         open();
         String query = adapter.convertSelect(kClass);
         ResultSet resultSet = this.jService.executingResult(query);
-        System.out.println(query.toString());
         return createListObject(kClass,resultSet);
     }
 
@@ -175,7 +174,6 @@ public class JDB implements Database {
                 ColumnInfo col = field.getAnnotation(ColumnInfo.class);
                 if (col != null) {
                     String name = col.name();
-                    System.out.println("COLUMN"+name.toString());
                     try {
                         String value = resultSet.getString(name);
                         field.set(dto, (value));
@@ -187,7 +185,6 @@ public class JDB implements Database {
                 PrimaryKey pri = field.getAnnotation(PrimaryKey.class);
                 if (pri != null) {
                     String name = pri.name();
-                    System.out.println("PRIMARY"+name.toString());
                     try {
                         int value = resultSet.getInt(name);
                         field.set(dto, (value));
