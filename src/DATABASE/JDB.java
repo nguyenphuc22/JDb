@@ -75,8 +75,29 @@ public class JDB implements Database {
             executing(query);
         }
     }
+
+    @Override
+    public <T> void insert(List<T> objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertInsert(object);
+            executing(query);
+        }
+    }
+
     @Override
     public void delete(Object ... objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertDelete(object);
+            executing(query);
+        }
+    }
+
+    @Override
+    public <T> void delete(List<T> objects) {
         open();
         String query;
         for (Object object : objects) {
@@ -92,13 +113,23 @@ public class JDB implements Database {
         for (Object object : objects) {
             query = adapter.convertDelete(object);
             query = query.substring(0,query.toLowerCase().lastIndexOf(CHAR_WHERE) + 6);
-            query = query.concat(a.getQuery());
+            query = query.concat(" ").concat(a.getQuery());
             executing(query);
         }
     }
 
     @Override
     public void update(Object ... objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertUpdate(object);
+            executing(query);
+        }
+    }
+
+    @Override
+    public <T> void update(List<T> objects) {
         open();
         String query;
         for (Object object : objects) {
@@ -133,7 +164,7 @@ public class JDB implements Database {
     public <T> List<T> get(Assert a, Class<T> kClass) {
         open();
         String query = adapter.convertSelect(kClass);
-        query = query.concat(" ").concat(CHAR_WHERE).concat("").concat(a.getQuery());
+        query = query.concat(" ").concat(CHAR_WHERE).concat(" ").concat(a.getQuery());
         ResultSet resultSet = this.jService.executingResult(query);
         return createListObject(kClass,resultSet);
     }

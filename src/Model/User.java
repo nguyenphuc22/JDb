@@ -12,17 +12,27 @@ import java.util.List;
 public class User  {
     public  User(){}
 
+    public User(String name, String age, Double abc, Boolean sex) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public User(String name, String age, Double abc) {
+        this.name = name;
+        this.age = age;
+    }
+
     public User(String name, String age) {
         this.name = name;
         this.age = age;
     }
-    public User(int Id, String name,String age){
+    public User(long Id, String name,String age){
         this.name = name;
         this.age = age;
         this.id=Id;
     }
     @PrimaryKey(name="Id")
-    private int id;
+    private long id;
 
     @ColumnInfo(name= "name")
     private String name;
@@ -30,7 +40,7 @@ public class User  {
     @ColumnInfo(name="age")
     private String age;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -53,4 +63,9 @@ public class User  {
     public void setAge(String age) {
         this.age = age;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }

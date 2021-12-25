@@ -1,16 +1,16 @@
 package DATABASE.Matcher;
 
 public class Equal implements Assert{
-    private String table;
+    private String col;
     private Object value;
 
-    public Equal(String table, Object value) {
-        this.table = table;
+    public Equal(String col, Object value) {
+        this.col = col;
         this.value = value;
     }
 
     @Override
     public String getQuery() {
-        return table + "=" + Assert.Util.convert(value);
+        return col + "=" + Assert.Util.convert(value);
     }
 }

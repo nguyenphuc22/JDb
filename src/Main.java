@@ -16,8 +16,12 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        User user = new User("Abc","Xyc");
-        jdb.insert(user);
+        Assert abc = new Equal("name","abc");
+        Assert xyz = new Equal("age","xyz");
+        Assert or = new And(abc,xyz);
+        for (User user : jdb.get(or,User.class)) {
+            System.out.println(user.getAge());
+        }
         jdb.close();
     }
 }

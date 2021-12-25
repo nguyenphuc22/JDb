@@ -29,6 +29,7 @@ public class JSQLite implements JService {
 
     @Override
     public void executing(String query) {
+        System.out.println(query);
         try {
             conn.createStatement().execute(query);
         } catch (SQLException e) {
@@ -38,6 +39,7 @@ public class JSQLite implements JService {
 
     @Override
     public ResultSet executingResult(String query) {
+        System.out.println(query);
         ResultSet resultSet = null;
         try {
             resultSet = conn.createStatement().executeQuery(query);

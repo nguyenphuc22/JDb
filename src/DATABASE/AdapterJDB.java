@@ -226,15 +226,6 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertTable(Class<?> Klass) {
-//        CREATE TABLE Persons (
-//                PersonID int,
-//                LastName varchar(255),
-//                FirstName varchar(255),
-//                Address varchar(255),
-//                City varchar(255)
-//        );
-        /*List<Field> columnInfos = getColumnInfos(User.class);
-        List<Field> primaries = getPrimaryKey(User.class);*/
 
         Field[] fieldsCol = Klass.getDeclaredFields();
 
@@ -325,9 +316,9 @@ public class AdapterJDB implements Adapter {
         Table myAnn = (Table) ann;
         String query ="SELECT * FROM ";
         if(myAnn.name().equals("")){
-            query=query+Klass.getClass()+" ;";
+            query=query+Klass.getClass();
         }else
-            query=query+myAnn.name()+" ;";
+            query=query+myAnn.name();
 
         return query;
     }
