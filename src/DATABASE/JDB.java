@@ -72,7 +72,6 @@ public class JDB implements Database {
         String query;
         for (Object object : objects) {
             query = adapter.convertInsert(object);
-            System.out.println(query);
             executing(query);
         }
     }

@@ -16,8 +16,9 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        jdb.open();
-        jdb.get(User.class);
+        User user = new User("Phuc","12");
+        user.id = 4;
+        jdb.update(user);
         jdb.close();
     }
 }
