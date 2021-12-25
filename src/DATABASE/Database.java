@@ -18,9 +18,12 @@ public interface Database {
     void delete(Object ... objects);
     <T> void delete(List<T> objects);
     void delete(Assert a, Object... objects);
+    <T> void delete(Assert a,List<T> objects);
 
     void update(Object ... objects);
     <T> void update(List<T> objects);
+    void update(Assert a, Object... objects);
+    <T> void update(Assert a,List<T> objects);
 
     void close();
     <T> List<T> get(Class<T> kClass);

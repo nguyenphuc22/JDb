@@ -119,6 +119,18 @@ public class JDB implements Database {
     }
 
     @Override
+    public <T> void delete(Assert a, List<T> objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertDelete(object);
+            query = query.substring(0,query.toLowerCase().lastIndexOf(CHAR_WHERE) + 6);
+            query = query.concat(" ").concat(a.getQuery());
+            executing(query);
+        }
+    }
+
+    @Override
     public void update(Object ... objects) {
         open();
         String query;
@@ -134,6 +146,30 @@ public class JDB implements Database {
         String query;
         for (Object object : objects) {
             query = adapter.convertUpdate(object);
+            executing(query);
+        }
+    }
+
+    @Override
+    public void update(Assert a, Object... objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertUpdate(object);
+            query = query.substring(0,query.toLowerCase().lastIndexOf(CHAR_WHERE) + 6);
+            query = query.concat(" ").concat(a.getQuery());
+            executing(query);
+        }
+    }
+
+    @Override
+    public <T> void update(Assert a, List<T> objects) {
+        open();
+        String query;
+        for (Object object : objects) {
+            query = adapter.convertUpdate(object);
+            query = query.substring(0,query.toLowerCase().lastIndexOf(CHAR_WHERE) + 6);
+            query = query.concat(" ").concat(a.getQuery());
             executing(query);
         }
     }
