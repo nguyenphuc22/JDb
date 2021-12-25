@@ -215,12 +215,12 @@ public class AdapterJDB implements Adapter {
             // System.out.println("INSERT INTO  "+table+"(" +);
 
        //     System.out.println( String.format(update,table,entry.getKey(),hashMap.get(entry.getKey())));
-            value+=entry.getKey()+ " = '" +column.get(entry.getKey())+ "' AND " ;
+            value+=entry.getKey()+ " = '" +column.get(entry.getKey())+ "'," ;
 
             // System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
         }
 
-        return String.format(update,table,value.substring(0, value.length() - 5),primary+" = "+ primarykey.get(primary));
+        return String.format(update,table,value.substring(0, value.length() - 1),primary+" = "+ primarykey.get(primary));
 
     }
 
