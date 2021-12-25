@@ -14,4 +14,6 @@ public interface Adapter {
     String convertTable(Class<?> Klass);
 
     String convertSelect(Class<?> Klass);
+
+    String toTypeDB(Class<?> Klass);
 }

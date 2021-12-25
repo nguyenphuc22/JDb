@@ -322,4 +322,9 @@ public class AdapterJDB implements Adapter {
 
         return query;
     }
+
+    @Override
+    public String toTypeDB(Class<?> Klass) {
+        return null;
+    }
 }
