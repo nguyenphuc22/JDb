@@ -337,6 +337,14 @@ public class AdapterJDB implements Adapter {
     public String convertSelect(Class<?> Klass) {
         // Tuyen
         // SELECT * FROM table;
-        return null;
+        Annotation ann = Klass.getAnnotation(Table.class);
+        Table myAnn = (Table) ann;
+        String query ="SELECT * FROM ";
+        if(myAnn.name().equals("")){
+            query=query+Klass.getClass()+" ;";
+        }else
+            query=query+myAnn.name()+" ;";
+
+        return query;
     }
 }

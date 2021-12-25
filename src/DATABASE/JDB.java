@@ -1,12 +1,16 @@
 package DATABASE;
 
 import DATABASE.Matcher.Assert;
-import DATABASE.Service.JSQLite;
 import DATABASE.Service.JService;
-import Entity.Table;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDB implements Database {
@@ -132,7 +136,32 @@ public class JDB implements Database {
     private <T> List<T> createListObject(Class<T> kClass,ResultSet resultSet) {
         // Tuyen
         // Create object using class
+        List<Object> rs= new ArrayList<>();
+        Field[] fields=kClass.getDeclaredFields();
 
+        Annotation[] anns=kClass.getAnnotations();
+        try {
+            int index=1;
+            Class<?> clazz = Class.forName(kClass.getName());
+            Constructor<?> ctor = clazz.getConstructor(String.class);
+
+
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            while(resultSet.next()) {
+
+                Object sa=resultSet.getObject(index);
+                Object object = ctor.newInstance(new Object[] { sa });
+
+                index++;
+                rs.add(object);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         // https://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor
         return null;
     }
