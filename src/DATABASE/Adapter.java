@@ -15,5 +15,4 @@ public interface Adapter {
 
     String convertSelect(Class<?> Klass);
 
-    String toTypeDB(Class<?> Klass);
 }
