@@ -15,6 +15,8 @@ public class Animal{
     @ColumnInfo(name ="type")
     public String type;
 
+    public Animal(){}
+
     public Animal(String name, String age, String type) {
         this.name = name;
         this.age = age;

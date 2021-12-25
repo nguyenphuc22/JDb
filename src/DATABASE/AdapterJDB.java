@@ -107,8 +107,8 @@ public class AdapterJDB implements Adapter {
     @Override
     public String convertInsert(Object object) {
         String table;
-        HashMap<String, String> hashMap = new HashMap<>();
-
+        HashMap<String, String> column = new HashMap<>();
+        HashMap<String, String> primarykey = new HashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
@@ -117,7 +117,7 @@ public class AdapterJDB implements Adapter {
 
                 try {
 
-                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -128,7 +128,7 @@ public class AdapterJDB implements Adapter {
 
 
                 try {
-                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                    column.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -138,15 +138,15 @@ public class AdapterJDB implements Adapter {
         String insert ="INSERT INTO %s (%s) VALUES (%s)";
         String col="";
         String value="";
-        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+        for (Map.Entry<String, String> entry : column.entrySet()) {
 
             // System.out.println("INSERT INTO  "+table+"(" +);
 
-            System.out.println( String.format(insert,table,entry.getKey(),hashMap.get(entry.getKey())));
+            System.out.println( String.format(insert,table,entry.getKey(),column.get(entry.getKey())));
             col+=entry.getKey()+",";
-            value+="'"+hashMap.get(entry.getKey())+"' ,";
+            value+="'"+column.get(entry.getKey())+"' ,";
 
-            System.out.println( String.format(insert,table,entry.getKey(),hashMap.get(entry.getKey())));
+            System.out.println( String.format(insert,table,entry.getKey(),column.get(entry.getKey())));
         }
 
         return String.format(insert,table,col.substring(0, col.length() - 1),value.substring(0, value.length() - 1));
@@ -155,8 +155,9 @@ public class AdapterJDB implements Adapter {
     @Override
     public String convertDelete(Object object) {
         String table;
-        HashMap<String, String> hashMap = new HashMap<>();
 
+        HashMap<String, String> primarykey = new HashMap<>();
+        String primary = "";
         Field[] fields = object.getClass().getDeclaredFields();
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
@@ -164,46 +165,25 @@ public class AdapterJDB implements Adapter {
             if (f.isAnnotationPresent(PrimaryKey.class)) {
 
                 try {
-
-                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                    primary=f.getAnnotation(PrimaryKey.class).name();
+                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
 
             }
 
-            if (f.isAnnotationPresent(ColumnInfo.class)) {
-
-
-                try {
-                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-            }
         }
         String delete ="DELETE FROM %s WHERE %s";
-        String col="";
-        String value="";
-        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
-
-            // System.out.println("INSERT INTO  "+table+"(" +);
-
-            System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
-           value+=entry.getKey()+ " = '" +hashMap.get(entry.getKey())+ "' AND " ;
-
-            // System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
-        }
-
-        return String.format(delete,table,value.substring(0, value.length() - 5));
+        return String.format(delete,table,primary + " = "+ primarykey.get(primary));
     }
 
     @Override
     public String convertUpdate(Object object) {
         String table;
-        HashMap<String, String> hashMap = new HashMap<>();
-
+        String primary="";
+        HashMap<String, String> column = new HashMap<>();
+        HashMap<String, String> primarykey = new HashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
         table = object.getClass().getAnnotation(Table.class).name();
         List<List<String>> columns = new ArrayList<>();
@@ -211,19 +191,16 @@ public class AdapterJDB implements Adapter {
             if (f.isAnnotationPresent(PrimaryKey.class)) {
 
                 try {
-
-                    hashMap.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                    primary=f.getAnnotation(PrimaryKey.class).name();
+                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-
             }
 
             if (f.isAnnotationPresent(ColumnInfo.class)) {
-
-
                 try {
-                    hashMap.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                    column.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -233,17 +210,17 @@ public class AdapterJDB implements Adapter {
         String update ="UPDATE %s SET %s WHERE %s";
         String col="";
         String value="";
-        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+        for (Map.Entry<String, String> entry : column.entrySet()) {
 
             // System.out.println("INSERT INTO  "+table+"(" +);
 
-            System.out.println( String.format(update,table,entry.getKey(),hashMap.get(entry.getKey())));
-            value+=entry.getKey()+ " = '" +hashMap.get(entry.getKey())+ "' AND " ;
+       //     System.out.println( String.format(update,table,entry.getKey(),hashMap.get(entry.getKey())));
+            value+=entry.getKey()+ " = '" +column.get(entry.getKey())+ "' AND " ;
 
             // System.out.println( String.format(delete,table,entry.getKey(),hashMap.get(entry.getKey())));
         }
 
-        return String.format(update,table,"",value.substring(0, value.length() - 5));
+        return String.format(update,table,value.substring(0, value.length() - 5),primary+" = "+ primarykey.get(primary));
 
     }
 

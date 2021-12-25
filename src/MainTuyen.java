@@ -16,12 +16,18 @@ import java.util.List;
 public class MainTuyen {
 
     public static void main(String[] args) throws NoSuchFieldException {
+
         JDB jdb = JDB.getInstance();
         JDBInfo jdbInfo = new JDBInfo.Builder()
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(jdbInfo);
-        jdb.get(User.class);
+        List<Animal> users=jdb.get(Animal.class);
+        for (Animal u:users) {
+            System.out.println(u.type.toString());
+
+        }
+        System.out.println(users.size());
         jdb.close();
 
 
