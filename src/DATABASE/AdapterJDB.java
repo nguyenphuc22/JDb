@@ -3,6 +3,7 @@ package DATABASE;
 import DATABASE.Convert.ConvertTypeDB;
 import DATABASE.Convert.FactoryJDB;
 import DATABASE.Convert.FactoryTypeDB;
+import DATABASE.Convert.SQLiteType;
 import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
@@ -219,7 +220,7 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertTable(Class<?> Klass) {
-
+        SQLiteType sqLiteType=new SQLiteType();
         Field[] fieldsCol = Klass.getDeclaredFields();
         List<Field> columnInfos = new ArrayList<>();
         for (Field f : fieldsCol) {
@@ -255,11 +256,14 @@ public class AdapterJDB implements Adapter {
             }else
                 query=query+p.name().toString()+" ";
 
-            if(f.getType().getName().equals("java.lang.String")){
-                query=query+"TEXT ";
-            }
-            else
-                query=query+"INTEGER ";
+            // if(f.getType().getName().equals("java.lang.String")){
+            //     query=query+"TEXT ";
+            // }
+            // else
+            //     query=query+"INTEGER ";
+            int.class.toString();
+
+            query=query+sqLiteType.toTypeDB(f.getType());
 
             query=query+"PRIMARY KEY ";
 
@@ -278,11 +282,13 @@ public class AdapterJDB implements Adapter {
             }else
                 query=query+p.name().toString()+" ";
 
-            if(f.getType().getName().equals("java.lang.String")){
+           /* if(f.getType().getName().equals("java.lang.String")){
                 query=query+"TEXT ";
             }
             else
-                query=query+"INTEGER ";
+                query=query+"INTEGER ";*/
+
+            query=query+sqLiteType.toTypeDB(f.getClass());
 
             if(p.notnull()==true){
                 query=query+"NOT NULL,";
