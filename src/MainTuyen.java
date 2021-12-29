@@ -30,14 +30,19 @@ public class MainTuyen {
         }
         System.out.println(users.size());
         jdb.close();*/
-        float fl= 5;
-        double db=5.0;
-        long a=5;
-        boolean b=true;
-        SQLiteType sqLiteType=new SQLiteType();
-        AdapterJDB adap =new AdapterJDB();
-        System.out.println(adap.convertTable(Animal.class));
+        JDB jdb=JDB.getInstance();
+        jdb.setDatabaseInfo(new JDBInfo.Builder().addUrl("DBTest.db").build());
+        List<Animal> users=jdb.get(Animal.class);
+        for(Animal u : users)
+        {
+            System.out.println(u.getId());
+            System.out.println(u.getName().toString());
+            System.out.println(u.getAge());
 
+
+            System.out.println(u.getType());
+            System.out.println();
+        }
 
 
 

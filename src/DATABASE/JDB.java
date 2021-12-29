@@ -241,9 +241,34 @@ public class JDB implements Database {
                 ColumnInfo col = field.getAnnotation(ColumnInfo.class);
                 if (col != null) {
                     String name = col.name();
-                    try {
-                        String value = resultSet.getString(name);
-                        field.set(dto, (value));
+
+                    String type =field.getType().getSimpleName();
+                    try {//////////////
+                        if(type.equals("String")) {
+                            String value = resultSet.getString(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("float")) {
+                            float value = resultSet.getFloat(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("double")) {
+                            double value = resultSet.getDouble(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("long")) {
+                            long value = resultSet.getLong(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("int")) {
+                            int value = resultSet.getInt(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("boolean")) {
+                            boolean value = resultSet.getBoolean(name);
+                            field.set(dto, (value));
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -252,9 +277,34 @@ public class JDB implements Database {
                 PrimaryKey pri = field.getAnnotation(PrimaryKey.class);
                 if (pri != null) {
                     String name = pri.name();
+
+                    String type =field.getType().getSimpleName();
                     try {
-                        int value = resultSet.getInt(name);
-                        field.set(dto, (value));
+                        if(type.equals("String")) {
+                            String value = resultSet.getString(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("float")) {
+                            float value = resultSet.getFloat(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("double")) {
+                            double value = resultSet.getDouble(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("long")) {
+                            long value = resultSet.getLong(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("int")) {
+                            int value = resultSet.getInt(name);
+                            field.set(dto, (value));
+                        }
+                        if(type.equals("boolean")) {
+                            boolean value = resultSet.getBoolean(name);
+                            field.set(dto, (value));
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -267,3 +317,4 @@ public class JDB implements Database {
         return list;
     }
 }
+

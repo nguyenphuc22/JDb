@@ -262,7 +262,7 @@ public class AdapterJDB implements Adapter {
             // else
             //     query=query+"INTEGER ";
             int.class.toString();
-
+            System.out.println((f.getType()));
             query=query+sqLiteType.toTypeDB(f.getType());
 
             query=query+"PRIMARY KEY ";
@@ -288,7 +288,7 @@ public class AdapterJDB implements Adapter {
             else
                 query=query+"INTEGER ";*/
 
-            query=query+sqLiteType.toTypeDB(f.getClass());
+            query=query+sqLiteType.toTypeDB(f.getType());
 
             if(p.notnull()==true){
                 query=query+"NOT NULL,";

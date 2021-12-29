@@ -22,7 +22,7 @@ public class SQLiteType implements ConvertTypeDB{
                 return " TEXT ";
 
             case "boolean":
-                return " REAL ";
+                return " NUMERIC ";
 
             default:
                 return " TEXT ";

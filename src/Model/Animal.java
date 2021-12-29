@@ -11,13 +11,31 @@ public class Animal{
     @ColumnInfo(name = "name")
     public String name;
     @ColumnInfo(name = "age")
-    public String age;
+    public double age;
     @ColumnInfo(name ="type")
-    public String type;
+    public float type;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getAge() {
+        return age;
+    }
+
+    public float getType() {
+        return type;
+    }
+
+
 
     public Animal(){}
 
-    public Animal(String name, String age, String type) {
+    public Animal(String name, double age, float type) {
         this.name = name;
         this.age = age;
         this.type = type;
