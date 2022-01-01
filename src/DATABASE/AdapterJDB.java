@@ -3,6 +3,7 @@ package DATABASE;
 import DATABASE.Convert.ConvertTypeDB;
 import DATABASE.Convert.FactoryJDB;
 import DATABASE.Convert.FactoryTypeDB;
+import DATABASE.Convert.SQLiteType;
 import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
@@ -122,30 +123,17 @@ public class AdapterJDB implements Adapter {
     public String convertInsert(Object object) {
         String table;
         HashMap<String, String> column = new HashMap<>();
-        HashMap<String, String> primarykey = new HashMap<>();
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
         }
-        table = object.getClass().getAnnotation(Table.class).name();
-        List<List<String>> columns = new ArrayList<>();
+        table = (object.getClass().getAnnotation(Table.class).name().equals("")) ? object.getClass().getSimpleName() : object.getClass().getAnnotation(Table.class).name();
+
         for (Field f : fields) {
-            if (f.isAnnotationPresent(PrimaryKey.class)) {
-
-                try {
-
-                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
             if (f.isAnnotationPresent(ColumnInfo.class)) {
-
-
+                String field_name = (f.getAnnotation(ColumnInfo.class).name().equals(""))? f.getName(): f.getAnnotation(ColumnInfo.class).name();
                 try {
-                    column.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                    column.put(field_name,f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -156,40 +144,33 @@ public class AdapterJDB implements Adapter {
         String col="";
         String value="";
         for (Map.Entry<String, String> entry : column.entrySet()) {
-
-
             col+=entry.getKey()+",";
             value+="'"+column.get(entry.getKey())+"' ,";
-
         }
-
         return String.format(insert,table,col.substring(0, col.length() - 1),value.substring(0, value.length() - 1));
     }
 
     @Override
     public String convertDelete(Object object) {
         String table;
-
         HashMap<String, String> primarykey = new HashMap<>();
         String primary = "";
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
         }
-        table = object.getClass().getAnnotation(Table.class).name();
-        List<List<String>> columns = new ArrayList<>();
+        table = (object.getClass().getAnnotation(Table.class).name().equals(""))?object.getClass().getSimpleName():object.getClass().getAnnotation(Table.class).name();
+
         for (Field f : fields) {
             if (f.isAnnotationPresent(PrimaryKey.class)) {
-
+                String field_name = (f.getAnnotation(PrimaryKey.class).name().equals(""))? f.getName(): f.getAnnotation(PrimaryKey.class).name();
                 try {
-                    primary=f.getAnnotation(PrimaryKey.class).name();
-                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                    primary=field_name;
+                    primarykey.put(field_name,f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-
             }
-
         }
         String delete ="DELETE FROM %s WHERE %s";
         return String.format(delete,table,primary + " = "+ primarykey.get(primary));
@@ -205,36 +186,32 @@ public class AdapterJDB implements Adapter {
         for (Field field : fields) {
             field.setAccessible(true);
         }
-        table = object.getClass().getAnnotation(Table.class).name();
-        List<List<String>> columns = new ArrayList<>();
+        table = (object.getClass().getAnnotation(Table.class).name().equals(""))?object.getClass().getSimpleName():object.getClass().getAnnotation(Table.class).name();
+
         for (Field f : fields) {
             if (f.isAnnotationPresent(PrimaryKey.class)) {
-
+                String field_name = (f.getAnnotation(PrimaryKey.class).name().equals(""))? f.getName(): f.getAnnotation(PrimaryKey.class).name();
                 try {
-                    primary=f.getAnnotation(PrimaryKey.class).name();
-                    primarykey.put(f.getAnnotation(PrimaryKey.class).name(),f.get(object).toString());
+                    primary=field_name;
+                    primarykey.put(field_name,f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
 
             if (f.isAnnotationPresent(ColumnInfo.class)) {
+                String field_name = (f.getAnnotation(ColumnInfo.class).name().equals(""))? f.getName(): f.getAnnotation(ColumnInfo.class).name();
                 try {
-                    column.put(f.getAnnotation(ColumnInfo.class).name(),f.get(object).toString());
+                    column.put(field_name,f.get(object).toString());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-
             }
         }
         String update ="UPDATE %s SET %s WHERE %s";
-        String col="";
         String value="";
         for (Map.Entry<String, String> entry : column.entrySet()) {
-
-
             value+=entry.getKey()+ " = '" +column.get(entry.getKey())+ "'," ;
-
         }
 
         return String.format(update,table,value.substring(0, value.length() - 1),primary+" = "+ primarykey.get(primary));
@@ -243,10 +220,8 @@ public class AdapterJDB implements Adapter {
 
     @Override
     public String convertTable(Class<?> Klass) {
-
+        SQLiteType sqLiteType=new SQLiteType();
         Field[] fieldsCol = Klass.getDeclaredFields();
-
-
         List<Field> columnInfos = new ArrayList<>();
         for (Field f : fieldsCol) {
             f.setAccessible(true);
@@ -277,14 +252,18 @@ public class AdapterJDB implements Adapter {
             PrimaryKey p=(PrimaryKey) a;
             if(p.name().equals("")){
                 query=query+f.getName().toString()+" ";
+
             }else
                 query=query+p.name().toString()+" ";
 
-            if(f.getType().getName().equals("java.lang.String")){
-                query=query+"TEXT ";
-            }
-            else
-                query=query+"INTEGER ";
+            // if(f.getType().getName().equals("java.lang.String")){
+            //     query=query+"TEXT ";
+            // }
+            // else
+            //     query=query+"INTEGER ";
+            int.class.toString();
+            System.out.println((f.getType()));
+            query=query+sqLiteType.toTypeDB(f.getType());
 
             query=query+"PRIMARY KEY ";
 
@@ -303,11 +282,13 @@ public class AdapterJDB implements Adapter {
             }else
                 query=query+p.name().toString()+" ";
 
-            if(f.getType().getName().equals("java.lang.String")){
+           /* if(f.getType().getName().equals("java.lang.String")){
                 query=query+"TEXT ";
             }
             else
-                query=query+"INTEGER ";
+                query=query+"INTEGER ";*/
+
+            query=query+sqLiteType.toTypeDB(f.getType());
 
             if(p.notnull()==true){
                 query=query+"NOT NULL,";
