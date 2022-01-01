@@ -339,5 +339,5 @@ public class AdapterJDB implements Adapter {
 
         return query;
     }
-    
+
 }
