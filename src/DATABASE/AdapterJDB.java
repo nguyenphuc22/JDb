@@ -4,9 +4,7 @@ import DATABASE.Convert.ConvertTypeDB;
 import DATABASE.Convert.FactoryJDB;
 import DATABASE.Convert.FactoryTypeDB;
 import DATABASE.Convert.SQLiteType;
-import Entity.ColumnInfo;
-import Entity.PrimaryKey;
-import Entity.Table;
+import Entity.*;
 import Model.Animal;
 import Model.User;
 
@@ -306,18 +304,47 @@ public class AdapterJDB implements Adapter {
     public String convertSelect(Class<?> Klass) {
         // Tuyen
         // SELECT * FROM table;
+        String query = "SELECT * FROM ";
+
         Field[] fields = Klass.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
         }
         Annotation ann = Klass.getAnnotation(Table.class);
         Table myAnn = (Table) ann;
-        String query ="SELECT * FROM ";
-        if(myAnn.name().equals("")){
-            query=query+Klass.getClass();
-        }else
-            query=query+myAnn.name();
+        if (myAnn != null) {
 
+            if (myAnn.name().equals("")) {
+                query = query + Klass.getClass();
+            } else {
+                query = query + myAnn.name();
+            }
+
+        } else {
+            for (Field field : fields) {
+                if (field.getAnnotation(JoinTable.class) != null || field.getAnnotation(Relationship.class) != null ) {
+                    query = query.concat(" ").concat(field.getName().concat(","));
+                    System.out.println(query);
+                }
+            }
+            query = query.substring(0,query.length() - 1).concat(" ");
+            query = query.concat("Where").concat(" ");
+            for (Field field : fields) {
+                if (field.getAnnotation(Relationship.class) != null) {
+                    Annotation annotation = field.getAnnotation(Relationship.class);
+                    Relationship relationship = (Relationship) annotation;
+                    query = query.concat(relationship.name())
+                            .concat(".")
+                            .concat(relationship.joinColumns())
+                            .concat(" ")
+                            .concat("=")
+                            .concat(" ")
+                            .concat(field.getType().getSimpleName())
+                            .concat(".")
+                            .concat(relationship.inverseJoinColumns());
+                }
+            }
+        }
         return query;
     }
 

@@ -31,7 +31,7 @@ public class User  {
         this.age = age;
         this.id=Id;
     }
-    @PrimaryKey(name="Id")
+    @PrimaryKey(name="id")
     private long id;
 
     @ColumnInfo(name= "name")

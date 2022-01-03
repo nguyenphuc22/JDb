@@ -1,8 +1,24 @@
 package DATABASE;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JDBTest {
+
+    @BeforeEach
+    void SetUp() {
+        System.out.println("Before");
+    }
+
+    @AfterEach()
+    void TearDown() {
+        System.out.println("After");
+    }
+
 
     @org.junit.jupiter.api.Test
     void open() {
