@@ -24,8 +24,6 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(databaseInfo);
-        List<Animal> userAndAnimals = jdb.get(Animal.class);
-
-        System.out.println(userAndAnimals.size());
+        jdb.get(Animal.class);
     }
 }

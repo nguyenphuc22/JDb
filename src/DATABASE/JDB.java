@@ -340,7 +340,6 @@ public class JDB implements Database {
             }
 
             T dto = null;
-
             try {
                 try {
                     dto = kClass.getConstructor().newInstance();
