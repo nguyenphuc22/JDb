@@ -324,7 +324,6 @@ public class AdapterJDB implements Adapter {
             for (Field field : fields) {
                 if (field.getAnnotation(JoinTable.class) != null || field.getAnnotation(Relationship.class) != null ) {
                     query = query.concat(" ").concat(field.getName().concat(","));
-                    System.out.println(query);
                 }
             }
             query = query.substring(0,query.length() - 1).concat(" ");

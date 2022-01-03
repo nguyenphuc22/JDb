@@ -353,7 +353,9 @@ public class JDB implements Database {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }
-
+            for (Field field : dto.getClass().getDeclaredFields()) {
+                System.out.println(field.getName());
+            }
             for (Field field : fields) {
                 if (field.getAnnotation(Relationship.class) != null || field.getAnnotation(JoinTable.class) != null) {
                     for (Field child : field.getType().getDeclaredFields()) {
