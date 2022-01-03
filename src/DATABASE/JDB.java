@@ -380,11 +380,19 @@ public class JDB implements Database {
                                 if(type.equals("long")) {
                                     long value = resultSet.getLong(name);
                                     field.set(dto, (value));
+<<<<<<< HEAD
                                 }
                                 if(type.equals("int")) {
                                     int value = resultSet.getInt(name);
                                     field.set(dto, (value));
                                 }
+=======
+                                }
+                                if(type.equals("int")) {
+                                    int value = resultSet.getInt(name);
+                                    field.set(dto, (value));
+                                }
+>>>>>>> parent of 9c5973e (fix join Table)
                                 if(type.equals("boolean")) {
                                     boolean value = resultSet.getBoolean(name);
                                     field.set(dto, (value));

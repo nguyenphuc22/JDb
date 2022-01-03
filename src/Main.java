@@ -10,6 +10,6 @@ public class Main {
                 .addUrl("DBTest.db")
                 .build();
         jdb.setDatabaseInfo(databaseInfo);
-        jdb.get(UserAndAnimal.class);
+        jdb.get(Animal.class);
     }
 }
