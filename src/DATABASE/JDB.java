@@ -340,9 +340,15 @@ public class JDB implements Database {
             }
 
             T dto = null;
+
+            List<Object> childdto=new ArrayList<Object>();
             try {
                 try {
                     dto = kClass.getConstructor().newInstance();
+                    for (Field field : fields) {
+
+                        childdto.add(field.getClass().getConstructor().newInstance());
+                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
@@ -357,77 +363,88 @@ public class JDB implements Database {
             for (Field field : fields) {
                 if (field.getAnnotation(Relationship.class) != null || field.getAnnotation(JoinTable.class) != null) {
                     for (Field child : field.getType().getDeclaredFields()) {
-                        ColumnInfo col = child.getAnnotation(ColumnInfo.class);
-                        if (col != null) {
-                            String name = col.name();
 
-                            String type =field.getType().getSimpleName();
-                            try {//////////////
-                                if(type.equals("String")) {
-                                    String value = resultSet.getString(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("float")) {
-                                    float value = resultSet.getFloat(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("double")) {
-                                    double value = resultSet.getDouble(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("long")) {
-                                    long value = resultSet.getLong(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("int")) {
-                                    int value = resultSet.getInt(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("boolean")) {
-                                    boolean value = resultSet.getBoolean(name);
-                                    field.set(dto, (value));
+                        for(Object object:childdto){
+
+                            if(object.getClass().getTypeName().equals(child.getName())){
+                                ColumnInfo col = child.getAnnotation(ColumnInfo.class);
+                                if (col != null) {
+                                    String name = col.name();
+
+                                    String type =child.getType().getSimpleName();
+                                    try {//////////////
+                                        if(type.equals("String")) {
+                                            String value = resultSet.getString(name);
+                                            child.set(childdto, (value));
+                                        }
+                                        if(type.equals("float")) {
+                                            float value = resultSet.getFloat(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("double")) {
+                                            double value = resultSet.getDouble(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("long")) {
+                                            long value = resultSet.getLong(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("int")) {
+                                            int value = resultSet.getInt(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("boolean")) {
+                                            boolean value = resultSet.getBoolean(name);
+                                            child.set(dto, (value));
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+
                                 }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                PrimaryKey pri = child.getAnnotation(PrimaryKey.class);
+                                if (pri != null) {
+                                    String name = pri.name();
+
+                                    String type =child.getType().getSimpleName();
+                                    try {
+                                        if(type.equals("String")) {
+                                            String value = resultSet.getString(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("float")) {
+                                            float value = resultSet.getFloat(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("double")) {
+                                            double value = resultSet.getDouble(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("long")) {
+                                            long value = resultSet.getLong(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("int")) {
+                                            int value = resultSet.getInt(name);
+                                            child.set(dto, (value));
+                                        }
+                                        if(type.equals("boolean")) {
+                                            boolean value = resultSet.getBoolean(name);
+                                            child.set(dto, (value));
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
 
-                        PrimaryKey pri = field.getAnnotation(PrimaryKey.class);
-                        if (pri != null) {
-                            String name = pri.name();
 
-                            String type =field.getType().getSimpleName();
-                            try {
-                                if(type.equals("String")) {
-                                    String value = resultSet.getString(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("float")) {
-                                    float value = resultSet.getFloat(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("double")) {
-                                    double value = resultSet.getDouble(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("long")) {
-                                    long value = resultSet.getLong(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("int")) {
-                                    int value = resultSet.getInt(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("boolean")) {
-                                    boolean value = resultSet.getBoolean(name);
-                                    field.set(dto, (value));
-                                }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
                     }
                 }
             }
