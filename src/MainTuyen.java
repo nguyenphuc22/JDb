@@ -3,6 +3,8 @@ import DATABASE.AdapterJDB;
 import DATABASE.Convert.SQLiteType;
 import DATABASE.JDB;
 import DATABASE.JDBInfo;
+import DATABASE.Matcher.Assert;
+import DATABASE.Matcher.Equal;
 import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
@@ -36,7 +38,11 @@ public class MainTuyen {
         Student student=new Student("Huy","clc4");
         Student student1=new Student("Khuong","clc4");
         Student student2=new Student("Hao","clc4");
-        jdb.insert(student,student1,student2);
+
+
+        Assert equal=new Equal("id",1);
+        jdb.delete(equal,student);
+
 
 
 
