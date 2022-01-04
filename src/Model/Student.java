@@ -13,5 +13,11 @@ public class Student {
     @ColumnInfo(name = "Class")
     public String Class;
 
-   public Student(){}
+    public Student( String name, String aClass) {
+
+        this.name = name;
+        Class = aClass;
+    }
+
+    public Student(){}
 }
