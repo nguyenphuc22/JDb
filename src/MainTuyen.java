@@ -33,14 +33,10 @@ public class MainTuyen {
         jdb.close();*/
         JDB jdb=JDB.getInstance();
         jdb.setDatabaseInfo(new JDBInfo.Builder().addUrl("DBTest.db").build());
-
-
-        List<Student> students=jdb.get(Student.class);
-        for(Student stu: students){
-            System.out.println(stu.id);
-            System.out.println(stu.name);
-            System.out.println(stu.Class);
-        }
+        Student student=new Student("Huy","clc4");
+        Student student1=new Student("Khuong","clc4");
+        Student student2=new Student("Hao","clc4");
+        jdb.insert(student,student1,student2);
 
 
 
