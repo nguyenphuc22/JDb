@@ -32,18 +32,7 @@ public class MainTuyen {
         jdb.close();*/
         JDB jdb=JDB.getInstance();
         jdb.setDatabaseInfo(new JDBInfo.Builder().addUrl("DBTest.db").build());
-        List<Animal> users=jdb.get(Animal.class);
-        for(Animal u : users)
-        {
-            System.out.println(u.getId());
-            System.out.println(u.getName().toString());
-            System.out.println(u.getAge());
-
-
-            System.out.println(u.getType());
-            System.out.println();
-        }
-
+        jdb.createTable(User.class);
 
 
     }

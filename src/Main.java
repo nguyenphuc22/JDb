@@ -1,5 +1,6 @@
 import DATABASE.*;
 
+import Model.Animal;
 import Model.UserAndAnimal;
 
 
