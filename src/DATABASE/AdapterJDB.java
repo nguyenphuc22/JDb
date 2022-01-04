@@ -24,36 +24,7 @@ public class AdapterJDB implements Adapter {
         factoryTypeDB = new FactoryJDB();
         convertTypeDB = factoryTypeDB.createDB(FactoryJDB.TYPEDB_SQLITE);
     }
-
-
-    public void setConvertTypeDB(String TYPEDB) {
-        this.convertTypeDB = factoryTypeDB.createDB(TYPEDB);
-    }
-
-    public void setFactoryTypeDB(FactoryTypeDB factoryTypeDB) {
-        this.factoryTypeDB = factoryTypeDB;
-    }
-
-    public  List<Field> getColumnInfos(Class<?> type) {
-        Field[] fields = type.getDeclaredFields();
-        List<Field> columns = new ArrayList<>();
-        for (Field f : fields) {
-            if (f.isAnnotationPresent(ColumnInfo.class)) {
-                columns.add(f);
-            }
-        }
-        return columns;
-    }
-    public  List<Field> getPrimaryKey(Class<?> type) {
-        Field[] fields = type.getDeclaredFields();
-        List<Field> primaries = new ArrayList<>();
-        for (Field f : fields) {
-            if (f.isAnnotationPresent(PrimaryKey.class)) {
-                primaries.add(f);
-            }
-        }
-        return primaries;
-    }
+    
     @Override
     public String convertQuery(Object object) {
         String table =null;
