@@ -33,9 +33,15 @@ public class MainTuyen {
         jdb.close();*/
         JDB jdb=JDB.getInstance();
         jdb.setDatabaseInfo(new JDBInfo.Builder().addUrl("DBTest.db").build());
-        jdb.createTable(Student.class);
-        Adapter adapter=new AdapterJDB();
-        System.out.println(adapter.convertTable(Student.class));
+
+
+        List<Student> students=jdb.get(Student.class);
+        for(Student stu: students){
+            System.out.println(stu.id);
+            System.out.println(stu.name);
+            System.out.println(stu.Class);
+        }
+
 
 
     }
