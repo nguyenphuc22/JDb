@@ -10,7 +10,8 @@ public class MainTu {
         Animal dog = new Animal("Tuyen",21,2);
         Adapter adapter = new AdapterJDB();
         System.out.println(adapter.convertUpdate(user));
-        System.out.println((adapter.convertInsert(dog)));
+        System.out.println((adapter.convertInsert(user)));
+        System.out.println((adapter.convertDelete(user)));
 
     }
 }
