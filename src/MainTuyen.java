@@ -7,6 +7,7 @@ import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
 import Model.Animal;
+import Model.Student;
 import Model.User;
 
 import java.lang.annotation.Annotation;
@@ -32,7 +33,9 @@ public class MainTuyen {
         jdb.close();*/
         JDB jdb=JDB.getInstance();
         jdb.setDatabaseInfo(new JDBInfo.Builder().addUrl("DBTest.db").build());
-        jdb.createTable(User.class);
+        jdb.createTable(Student.class);
+        Adapter adapter=new AdapterJDB();
+        System.out.println(adapter.convertTable(Student.class));
 
 
     }
