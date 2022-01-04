@@ -24,69 +24,7 @@ public class AdapterJDB implements Adapter {
         factoryTypeDB = new FactoryJDB();
         convertTypeDB = factoryTypeDB.createDB(FactoryJDB.TYPEDB_SQLITE);
     }
-    
-    @Override
-    public String convertQuery(Object object) {
-        String table =null;
-            HashMap<String, String> hashMap = new HashMap<String, String>();
 
-            Field[] fields = object.getClass().getDeclaredFields();
-            table = object.getClass().getAnnotation(Table.class).name();
-            List<List<String>> columns = new ArrayList<>();
-            for (Field f : fields) {
-                if (f.isAnnotationPresent(PrimaryKey.class)) {
-                    List<String>column1 = new ArrayList<>();
-                    try {
-
-
-                        hashMap.put(f.getName(),f.get(object).toString());
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-
-                    column1.add(f.getAnnotation(PrimaryKey.class).name());
-                    columns.add(column1);
-                }
-
-                if (f.isAnnotationPresent(ColumnInfo.class)) {
-                    List<String>column1 = new ArrayList<>();
-
-                    try {
-                        hashMap.put(f.getName(),f.get(object).toString());
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    column1.add(f.getAnnotation(ColumnInfo.class).name());
-                    columns.add(column1);
-                }
-            }
-            String insert ="INSERT INTO %s (%s) VALUES(%s)";
-            String delete ="DELETE FROM %s WHERE %s = %s";
-            
-            for (Map.Entry<String, String> entry : hashMap.entrySet()) {
-
-                String.format(insert,table,entry.getKey(),hashMap.get(entry.getKey()));
-            }
-        // get annotation
-        // get Table
-        // get ColumnInfo
-        //-------------
-        // Cast object
-        // Get value
-        // Value
-        // -------------
-        // Example
-        // Insert
-        // INSERT INTO table (column1,column2 ,..) VALUES( value1,	value2 ,...);
-        // User
-        // INSERT INTO User  (name,age) VALUES ("Nick","123")
-        //String insert = "";
-        // Update
-        String update = "";
-        // Delete
-       // String delete = "";
-        return null;
-    }
 
     @Override
     public String convertInsert(Object object) {
