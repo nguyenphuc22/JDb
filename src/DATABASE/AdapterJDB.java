@@ -224,7 +224,7 @@ public class AdapterJDB implements Adapter {
         if (myAnn != null) {
 
             if (myAnn.name().equals("")) {
-                query = query + Klass.getClass();
+                query = query + Klass.getSimpleName();
             } else {
                 query = query + myAnn.name();
             }

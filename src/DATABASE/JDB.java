@@ -247,10 +247,15 @@ public class JDB implements Database {
             for (Field field : fields) {
                 ColumnInfo col = field.getAnnotation(ColumnInfo.class);
                 if (col != null) {
-                    String name = col.name();
+                    String name;
+                    if (col.name().equals("")) {
+                        name = field.getName();
+                    } else {
+                        name = col.name();
+                    }
 
                     String type =field.getType().getSimpleName();
-                    try {//////////////
+                    try {
                         if(type.equals("String")) {
                             String value = resultSet.getString(name);
                             field.set(dto, (value));
@@ -283,7 +288,13 @@ public class JDB implements Database {
 
                 PrimaryKey pri = field.getAnnotation(PrimaryKey.class);
                 if (pri != null) {
-                    String name = pri.name();
+                    String name;
+                    if (pri.name().equals("")) {
+                        name = field.getName();
+                    } else {
+                        name = pri.name();
+                    }
+
 
                     String type =field.getType().getSimpleName();
                     try {

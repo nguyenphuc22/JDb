@@ -17,6 +17,13 @@ public class Animal{
 
     public Animal() {}
 
+    public Animal(long id, String name, String type, boolean sex) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.sex = sex;
+    }
+
     public long getId() {
         return id;
     }
@@ -47,5 +54,15 @@ public class Animal{
 
     public void setSex(boolean sex) {
         this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", sex=" + sex +
+                '}';
     }
 }
