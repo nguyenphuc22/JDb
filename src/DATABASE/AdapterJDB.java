@@ -241,7 +241,7 @@ public class AdapterJDB implements Adapter {
         Table myAnn = (Table) ann;
 
         if(myAnn.name().equals("")){
-            query=query+Klass.getClass()+" (";
+            query= query+Klass.getSimpleName()+" (";
         }else
             query=query+myAnn.name()+" (";
 

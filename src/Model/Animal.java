@@ -4,40 +4,48 @@ import Entity.ColumnInfo;
 import Entity.PrimaryKey;
 import Entity.Table;
 
-@Table(name = "Animal")
+@Table
 public class Animal{
-    @PrimaryKey(name ="id")
-    public int id;
-    @ColumnInfo(name = "name")
-    public String name;
-    @ColumnInfo(name = "age")
-    public double age;
-    @ColumnInfo(name ="type")
-    public float type;
+    @PrimaryKey
+    private long id;
+    @ColumnInfo
+    private String name;
+    @ColumnInfo
+    private String type;
+    @ColumnInfo
+    private boolean sex;
 
-    public int getId() {
+    public Animal() {}
+
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getAge() {
-        return age;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public float getType() {
+    public String getType() {
         return type;
     }
 
-
-
-    public Animal(){}
-
-    public Animal(String name, double age, float type) {
-        this.name = name;
-        this.age = age;
+    public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
     }
 }

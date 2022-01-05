@@ -324,12 +324,14 @@ public class JDB implements Database {
     }
 
     private <T> List<T> createListObjectJoinTable(Class<T> kClass,ResultSet resultSet) {
-        // Tuyen
-        // Create object using class
+
         List<Object> rs = new ArrayList<>();
         Field[] fields = kClass.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
+            for (Field child : field.getType().getDeclaredFields()) {
+                child.setAccessible(true);
+            }
         }
         List<T> list = new ArrayList<>();
         while (true) {
@@ -353,90 +355,93 @@ public class JDB implements Database {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }
-            for (Field field : dto.getClass().getDeclaredFields()) {
-                System.out.println(field.getName());
-            }
+
             for (Field field : fields) {
                 if (field.getAnnotation(Relationship.class) != null || field.getAnnotation(JoinTable.class) != null) {
                     for (Field child : field.getType().getDeclaredFields()) {
-                        ColumnInfo col = child.getAnnotation(ColumnInfo.class);
-                        if (col != null) {
-                            String name = col.name();
+                        for (Field childDTO : dto.getClass().getDeclaredFields()) {
+                            if (childDTO.getName().equals(field.getName())) {
+                                ColumnInfo col = child.getAnnotation(ColumnInfo.class);
+                                if (col != null) {
+                                    String name = col.name();
 
-                            String type =field.getType().getSimpleName();
-                            try {//////////////
-                                if(type.equals("String")) {
-                                    String value = resultSet.getString(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("float")) {
-                                    float value = resultSet.getFloat(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("double")) {
-                                    double value = resultSet.getDouble(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("long")) {
-                                    long value = resultSet.getLong(name);
-                                    field.set(dto, (value));
-<<<<<<< HEAD
-                                }
-                                if(type.equals("int")) {
-                                    int value = resultSet.getInt(name);
-                                    field.set(dto, (value));
-                                }
-=======
-                                }
-                                if(type.equals("int")) {
-                                    int value = resultSet.getInt(name);
-                                    field.set(dto, (value));
-                                }
->>>>>>> parent of 9c5973e (fix join Table)
-                                if(type.equals("boolean")) {
-                                    boolean value = resultSet.getBoolean(name);
-                                    field.set(dto, (value));
-                                }
+                                    String type =child.getType().getSimpleName();
+                                    try {//////////////
+                                        if(type.equals("String")) {
+                                            String value = resultSet.getString(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("float")) {
+                                            float value = resultSet.getFloat(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("double")) {
+                                            double value = resultSet.getDouble(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("long")) {
+                                            long value = resultSet.getLong(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("int")) {
+                                            int value = resultSet.getInt(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                        if(type.equals("int")) {
+                                            int value = resultSet.getInt(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("boolean")) {
+                                            boolean value = resultSet.getBoolean(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                PrimaryKey pri = child.getAnnotation(PrimaryKey.class);
+                                if (pri != null) {
+                                    String name = pri.name();
+
+                                    String type =child.getType().getSimpleName();
+                                    try {
+                                        if(type.equals("String")) {
+                                            String value = resultSet.getString(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("float")) {
+                                            float value = resultSet.getFloat(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("double")) {
+                                            double value = resultSet.getDouble(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("long")) {
+                                            long value = resultSet.getLong(name);
+                                            child.set(field.getName(), (value));
+                                        }
+                                        if(type.equals("int")) {
+                                            int value = resultSet.getInt(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+                                        if(type.equals("boolean")) {
+                                            boolean value = resultSet.getBoolean(name);
+                                            child.set(field.get(field.getName()), (value));
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
-
-                        PrimaryKey pri = field.getAnnotation(PrimaryKey.class);
-                        if (pri != null) {
-                            String name = pri.name();
-
-                            String type =field.getType().getSimpleName();
-                            try {
-                                if(type.equals("String")) {
-                                    String value = resultSet.getString(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("float")) {
-                                    float value = resultSet.getFloat(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("double")) {
-                                    double value = resultSet.getDouble(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("long")) {
-                                    long value = resultSet.getLong(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("int")) {
-                                    int value = resultSet.getInt(name);
-                                    field.set(dto, (value));
-                                }
-                                if(type.equals("boolean")) {
-                                    boolean value = resultSet.getBoolean(name);
-                                    field.set(dto, (value));
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            field.set(dto,child);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
